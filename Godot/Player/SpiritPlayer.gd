@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-signal leave
-
 const GRUNT = preload("res://Player/GruntPlayer.tscn")
 
 export var ACCELERATION = 10000
@@ -17,6 +15,7 @@ onready var position2D = $Position2D
 
 func _ready():
 	camera2D.current = true
+	sprite.flip_h = Stats.flipped
 
 func _physics_process(delta):
 	move_state(delta)
@@ -44,8 +43,4 @@ func control():
 
 
 func _on_ControlReceive_area_entered(area):
-	Stats._change_character(area.character, global_position)
-	emit_signal("leave")
-
-func _on_SpiritPlayer_leave():
-	queue_free()
+	Stats._change_character(area.character, global_position, sprite.flip_h)

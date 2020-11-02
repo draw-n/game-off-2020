@@ -4,9 +4,9 @@
 [ext_resource path="res://Control System/Control.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Testing/TestPlayerSpiritSprite.png" type="Texture" id=3]
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=1]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 radius = 20.594
 
 [node name="GruntEnemy" type="KinematicBody2D"]
@@ -18,13 +18,13 @@ modulate = Color( 1, 0, 0, 1 )
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Control" parent="." instance=ExtResource( 2 )]
 character = "Grunt"
 
 [node name="CollisionShape2D" parent="Control" index="0"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 [connection signal="area_entered" from="Control" to="." method="_on_Control_area_entered"]
 
 [editable path="Control"]

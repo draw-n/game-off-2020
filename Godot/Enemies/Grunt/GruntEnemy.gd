@@ -13,4 +13,7 @@ func _physics_process(delta):
 
 
 func _on_Control_area_entered(_area):
-	queue_free()
+	if Stats.can_remove_enemy == true:
+		Stats.can_remove_enemy = false
+		queue_free()
+		

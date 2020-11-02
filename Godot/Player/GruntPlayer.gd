@@ -1,8 +1,6 @@
 extends KinematicBody2D
 
-
-signal leave
-#const PROJECTILE_SCENE = preload()
+const PROJECTILE_SCENE = preload("res://Damage/PlayerBullet.tscn")
 
 export var ACCELERATION = 100
 export var MAX_SPEED = 100
@@ -13,6 +11,8 @@ export var GRAVITY = 100
 var velocity = Vector2.ZERO
 
 onready var camera2D = $Camera2D
+onready var shootTimer = $ShootTimer
+onready var position2D = $Position2D
 onready var sprite = $Sprite
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
@@ -20,12 +20,13 @@ onready var animationState = animationTree.get("parameters/playback")
 
 func _ready():
 	camera2D.current = true
+	sprite.flip_h = Stats.flipped
 
 
 func _physics_process(delta):
 	move(delta)
 	control()
-#	shoot()
+	shoot()
 	
 func move(delta):
 	var x_input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -52,32 +53,24 @@ func move(delta):
 		
 func control():
 	if Input.is_action_just_pressed("ui_accept"):
-		Stats._change_character("Spirit", global_position)
-		emit_signal("leave")
+		Stats._change_character("Spirit", global_position, sprite.flip_h)
 
-
-
-#func shoot():
-#	if dead == false:
-#		if attack_state == true:
-#			if Input.is_action_just_pressed("fire"):
-#				if shootTimer.is_stopped() == true:
-#			#Special feature - For every shot, minus max speed till 100
-#					var projectile = PROJECTILE_SCENE.instance()
-#					var main = get_tree().current_scene
-#					main.add_child(projectile)
-#					#Sets the origin of the projectile
-#					if position2D.position.x == abs(position2D.position.x):
-#						projectile.speed_x = 1
-#						projectile.rotation_degrees = 270
-#					elif position2D.position.x == -abs(position2D.position.x):
-#						projectile.speed_x = -1
-#						projectile.rotation_degrees = 90
-#					projectile.global_position = position2D.global_position 
-#					restart_timer()
-#func restart_timer():
-#	shootTimer.set_wait_time(.5)
-
-
-func _on_GruntPlayer_leave():
-	queue_free()
+func shoot():
+		if Input.is_action_just_pressed("fire"):
+			if shootTimer.is_stopped() == true:
+		#Special feature - For every shot, minus max speed till 100
+				var projectile = PROJECTILE_SCENE.instance()
+				var main = get_tree().current_scene
+				main.add_child(projectile)
+				#Sets the origin of the projectile
+				projectile.speed = 2000
+				if position2D.position.x == abs(position2D.position.x):
+					projectile.speed_x = 1
+					projectile.rotation_degrees = 270
+				elif position2D.position.x == -abs(position2D.position.x):
+					projectile.speed_x = -1
+					projectile.rotation_degrees = 90
+				projectile.global_position = position2D.global_position 
+				restart_timer()
+func restart_timer():
+	shootTimer.set_wait_time(.5)

@@ -3,22 +3,19 @@
 [ext_resource path="res://Player/GruntPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Testing/TestPlayerSpiritSprite.png" type="Texture" id=2]
 
-[sub_resource type="CapsuleShape2D" id=6]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 14.4363
 height = 13.2765
 
-[sub_resource type="Animation" id=1]
-resource_name = "Idle"
-
 [sub_resource type="Animation" id=2]
-resource_name = "Run"
 
 [sub_resource type="Animation" id=3]
-resource_name = "Shoot"
 
-[sub_resource type="AnimationNodeStateMachine" id=4]
+[sub_resource type="Animation" id=4]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+[sub_resource type="AnimationNodeStateMachine" id=5]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
 [node name="GruntPlayer" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -33,20 +30,19 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 6 )
+shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 1 )
-anims/Run = SubResource( 2 )
-anims/Shoot = SubResource( 3 )
+anims/Idle = SubResource( 2 )
+anims/Run = SubResource( 3 )
+anims/Shoot = SubResource( 4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 4 )
-parameters/playback = SubResource( 5 )
+tree_root = SubResource( 5 )
+parameters/playback = SubResource( 6 )
 
 [node name="Position2D" type="Position2D" parent="."]
 
 [node name="ShootTimer" type="Timer" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-[connection signal="leave" from="." to="." method="_on_GruntPlayer_leave"]

@@ -67,7 +67,6 @@ shape = SubResource( 7 )
 disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-[connection signal="leave" from="." to="." method="_on_SpiritPlayer_leave"]
 [connection signal="area_entered" from="ControlReceive" to="." method="_on_ControlReceive_area_entered"]
 
 [editable path="ControlReceive"]
