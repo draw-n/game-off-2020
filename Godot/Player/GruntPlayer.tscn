@@ -49,3 +49,4 @@ parameters/playback = SubResource( 5 )
 [node name="ShootTimer" type="Timer" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+[connection signal="leave" from="." to="." method="_on_GruntPlayer_leave"]

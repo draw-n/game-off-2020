@@ -35,3 +35,18 @@ func move_state(delta):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	velocity = move_and_slide(velocity)
+<<<<<<< Updated upstream
+=======
+
+func control():
+	if Input.is_action_just_pressed("ui_accept"):
+		animationPlayer.play("Control")
+
+
+func _on_ControlReceive_area_entered(area):
+	Stats._change_character(area.character, global_position)
+	emit_signal("leave")
+
+func _on_SpiritPlayer_leave():
+	queue_free()
+>>>>>>> Stashed changes
