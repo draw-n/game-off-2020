@@ -1,13 +1,26 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Testing/TestPlayerSpiritSprite.png" type="Texture" id=1]
 [ext_resource path="res://Player/SpiritPlayer.gd" type="Script" id=2]
+[ext_resource path="res://Control System/ControlReceive.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 36.4295
+radius = 21.2501
 
 [sub_resource type="Animation" id=2]
 resource_name = "Control"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ControlReceive/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "Idle"
@@ -19,7 +32,12 @@ resource_name = "Move"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
+[sub_resource type="CircleShape2D" id=7]
+radius = 13.1587
+
 [node name="SpiritPlayer" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource( 2 )
 ACCELERATION = 500
 MAX_SPEED = 64
@@ -39,3 +57,17 @@ anims/Move = SubResource( 4 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 5 )
 parameters/playback = SubResource( 6 )
+
+[node name="Position2D" type="Position2D" parent="."]
+
+[node name="ControlReceive" parent="." instance=ExtResource( 4 )]
+
+[node name="CollisionShape2D" parent="ControlReceive" index="0"]
+shape = SubResource( 7 )
+disabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+[connection signal="leave" from="." to="." method="_on_SpiritPlayer_leave"]
+[connection signal="area_entered" from="ControlReceive" to="." method="_on_ControlReceive_area_entered"]
+
+[editable path="ControlReceive"]
