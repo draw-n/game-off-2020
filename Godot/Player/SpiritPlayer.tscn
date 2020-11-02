@@ -37,11 +37,10 @@ radius = 13.1587
 
 [node name="SpiritPlayer" type="KinematicBody2D"]
 collision_layer = 0
-collision_mask = 0
 script = ExtResource( 2 )
-ACCELERATION = 500
-MAX_SPEED = 64
-FRICTION = 500.0
+ACCELERATION = 1000
+MAX_SPEED = 150
+FRICTION = 1000.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

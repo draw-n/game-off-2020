@@ -21,6 +21,8 @@ onready var animationState = animationTree.get("parameters/playback")
 func _ready():
 	camera2D.current = true
 	sprite.flip_h = Stats.flipped
+	Stats.set_health(5)
+	Stats.set_max_health(5)
 
 
 func _physics_process(delta):
@@ -53,17 +55,17 @@ func move(delta):
 		
 func control():
 	if Input.is_action_just_pressed("ui_accept"):
-		Stats._change_character("Spirit", global_position, sprite.flip_h)
+		Stats._back_to_spirit(self.global_position, sprite.flip_h)
 
 func shoot():
-		if Input.is_action_just_pressed("fire"):
+		if Input.is_action_just_pressed("attack_as_enemy"):
 			if shootTimer.is_stopped() == true:
 		#Special feature - For every shot, minus max speed till 100
 				var projectile = PROJECTILE_SCENE.instance()
 				var main = get_tree().current_scene
 				main.add_child(projectile)
 				#Sets the origin of the projectile
-				projectile.speed = 2000
+				projectile.speed = 250
 				if position2D.position.x == abs(position2D.position.x):
 					projectile.speed_x = 1
 					projectile.rotation_degrees = 270

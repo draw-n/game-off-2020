@@ -65,9 +65,12 @@ attack_as_enemy={
 
 [layer_names]
 
-2d_physics/layer_1="World"
+2d_physics/layer_1="Boundary"
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Control"
+2d_physics/layer_4="World"
+2d_physics/layer_5="PlayerHurtBox"
+2d_physics/layer_6="EnemyHurtBox"
 
 [rendering]
 

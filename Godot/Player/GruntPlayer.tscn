@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player/GruntPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Testing/TestPlayerSpiritSprite.png" type="Texture" id=2]
+[ext_resource path="res://Damage/HurtBox.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 14.4363
@@ -17,7 +18,11 @@ height = 13.2765
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
+[sub_resource type="CircleShape2D" id=7]
+
 [node name="GruntPlayer" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 9
 script = ExtResource( 1 )
 ACCELERATION = 500
 MAX_SPEED = 150
@@ -46,3 +51,11 @@ parameters/playback = SubResource( 6 )
 [node name="ShootTimer" type="Timer" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HurtBox" parent="." instance=ExtResource( 3 )]
+collision_layer = 16
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource( 7 )
+
+[editable path="HurtBox"]

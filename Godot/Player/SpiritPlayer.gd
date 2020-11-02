@@ -43,4 +43,4 @@ func control():
 
 
 func _on_ControlReceive_area_entered(area):
-	Stats._change_character(area.character, global_position, sprite.flip_h)
+	Stats._change_character(area.character)

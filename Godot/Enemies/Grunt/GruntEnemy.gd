@@ -6,6 +6,7 @@ export var FRICTION = .25
 export var GRAVITY = 100
 
 var velocity = Vector2.ZERO
+onready var sprite = $Sprite
 
 func _physics_process(delta):
 	velocity.y += GRAVITY * delta
@@ -14,6 +15,6 @@ func _physics_process(delta):
 
 func _on_Control_area_entered(_area):
 	if Stats.can_remove_enemy == true:
-		Stats.can_remove_enemy = false
+		Stats._enemy_location(global_position, sprite.flip_h)
 		queue_free()
 		
