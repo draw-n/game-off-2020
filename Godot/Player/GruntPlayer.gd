@@ -50,8 +50,11 @@ func move(delta):
 		animationState.travel('Jump')
 	if velocity.x > 0:
 		sprite.flip_h = false
+		position2D.position.x = 32
 	elif velocity.x < 0:
 		sprite.flip_h = true
+		position2D.position.x = -32
+		
 		
 func control():
 	if Input.is_action_just_pressed("ui_accept"):
@@ -66,13 +69,17 @@ func shoot():
 				main.add_child(projectile)
 				#Sets the origin of the projectile
 				projectile.speed = 250
-				if position2D.position.x == abs(position2D.position.x):
+				if position2D.position.x > 0:
 					projectile.speed_x = 1
 					projectile.rotation_degrees = 270
-				elif position2D.position.x == -abs(position2D.position.x):
+				elif position2D.position.x < 0:
 					projectile.speed_x = -1
 					projectile.rotation_degrees = 90
 				projectile.global_position = position2D.global_position 
 				restart_timer()
 func restart_timer():
 	shootTimer.set_wait_time(.5)
+
+
+func _on_HurtBox_area_entered(area):
+	Stats.health -= area.damage

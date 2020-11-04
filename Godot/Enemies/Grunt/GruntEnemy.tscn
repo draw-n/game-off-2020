@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Enemies/Grunt/GruntEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Control System/Control.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Testing/TestPlayerSpiritSprite.png" type="Texture" id=3]
 [ext_resource path="res://Damage/HurtBox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Enemies/EnemyStats.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -14,7 +15,7 @@ radius = 20.594
 radius = 15.5326
 
 [node name="GruntEnemy" type="KinematicBody2D"]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 9
 script = ExtResource( 1 )
 
@@ -36,7 +37,12 @@ collision_layer = 32
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 shape = SubResource( 3 )
+
+[node name="EnemyStats" parent="." instance=ExtResource( 5 )]
+max_health = 5
 [connection signal="area_entered" from="Control" to="." method="_on_Control_area_entered"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="no_health" from="EnemyStats" to="." method="_on_EnemyStats_no_health"]
 
 [editable path="Control"]
 

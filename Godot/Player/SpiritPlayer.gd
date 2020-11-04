@@ -11,7 +11,7 @@ var velocity = Vector2.ZERO
 onready var sprite = $Sprite
 onready var camera2D = $Camera2D
 onready var animationPlayer = $AnimationPlayer
-onready var position2D = $Position2D
+onready var controlPivot = $ControlPivot
 
 func _ready():
 	camera2D.current = true
@@ -22,9 +22,11 @@ func _physics_process(delta):
 	control()
 
 func move_state(delta):
-	if velocity.x > 0:
+	if velocity.x < 0:
+		controlPivot.rotation_degrees = 180
 		sprite.flip_h = false
-	elif velocity.x < 0:
+	elif velocity.x > 0:
+		controlPivot.rotation_degrees = 0
 		sprite.flip_h = true
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -33,14 +35,16 @@ func move_state(delta):
 	
 	if input_vector != Vector2.ZERO:
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+		animationPlayer.play("Move")
+		
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		animationPlayer.play("Idle")
 	velocity = move_and_slide(velocity)
 
 func control():
 	if Input.is_action_just_pressed("ui_accept"):
 		animationPlayer.play("Control")
-
 
 func _on_ControlReceive_area_entered(area):
 	Stats._change_character(area.character)

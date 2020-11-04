@@ -1,8 +1,9 @@
 extends Control
 
+signal remove
 
-var hearts = 100 setget set_hearts
-var max_hearts = 100 setget set_max_hearts
+var hearts = 5 setget set_hearts
+var max_hearts = 5 setget set_max_hearts
 
 onready var progressBar = $HealthProgress
 
@@ -13,7 +14,7 @@ func set_hearts(value):
 func set_max_hearts(value):
 	max_hearts = max(value, 1)
 	self.hearts = min(hearts, max_hearts)
-	progressBar.value = max_hearts
+	progressBar.max_value = max_hearts
 
 func _ready():
 	self.max_hearts = Stats.max_health
@@ -22,3 +23,7 @@ func _ready():
 	var max_health_change = Stats.connect("max_health_changed", self, "set_max_hearts")
 	if health_change != OK or max_health_change != OK:
 		print("Health change did a lil oopsie")
+
+func _physics_process(delta):
+	if Stats.character == "Spirit":
+		emit_signal("remove")

@@ -1,39 +1,66 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Testing/TestPlayerSpiritSprite.png" type="Texture" id=1]
+[ext_resource path="res://Testing/PlayerSpriteSheetWIP1.png" type="Texture" id=1]
 [ext_resource path="res://Player/SpiritPlayer.gd" type="Script" id=2]
 [ext_resource path="res://Control System/ControlReceive.tscn" type="PackedScene" id=4]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 21.2501
+[sub_resource type="CapsuleShape2D" id=8]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=9]
 resource_name = "Control"
+length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("ControlReceive/CollisionShape2D:disabled")
+tracks/0/path = NodePath("ControlPivot/ControlReceive/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.9 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ true, false, true ]
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=3]
 resource_name = "Idle"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "Move"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3 ]
+}
 
 [sub_resource type="AnimationNodeStateMachine" id=5]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
-[sub_resource type="CircleShape2D" id=7]
-radius = 13.1587
+[sub_resource type="CircleShape2D" id=10]
+radius = 36.5659
 
 [node name="SpiritPlayer" type="KinematicBody2D"]
 collision_layer = 0
@@ -44,12 +71,15 @@ FRICTION = 1000.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+hframes = 4
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Control = SubResource( 2 )
+autoplay = "Idle"
+anims/Control = SubResource( 9 )
 anims/Idle = SubResource( 3 )
 anims/Move = SubResource( 4 )
 
@@ -57,15 +87,16 @@ anims/Move = SubResource( 4 )
 tree_root = SubResource( 5 )
 parameters/playback = SubResource( 6 )
 
-[node name="Position2D" type="Position2D" parent="."]
+[node name="ControlPivot" type="Position2D" parent="."]
+rotation = 3.14159
 
-[node name="ControlReceive" parent="." instance=ExtResource( 4 )]
+[node name="ControlReceive" parent="ControlPivot" instance=ExtResource( 4 )]
 
-[node name="CollisionShape2D" parent="ControlReceive" index="0"]
-shape = SubResource( 7 )
+[node name="CollisionShape2D" parent="ControlPivot/ControlReceive" index="0"]
+shape = SubResource( 10 )
 disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-[connection signal="area_entered" from="ControlReceive" to="." method="_on_ControlReceive_area_entered"]
+[connection signal="area_entered" from="ControlPivot/ControlReceive" to="." method="_on_ControlReceive_area_entered"]
 
-[editable path="ControlReceive"]
+[editable path="ControlPivot/ControlReceive"]

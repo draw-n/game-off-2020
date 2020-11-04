@@ -6,6 +6,7 @@
 extents = Vector2( 29.4083, 29.6026 )
 
 [node name="Obstacle" type="StaticBody2D"]
+collision_layer = 8
 collision_mask = 0
 
 [node name="Sprite" type="Sprite" parent="."]
