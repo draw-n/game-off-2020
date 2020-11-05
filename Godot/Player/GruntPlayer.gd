@@ -23,6 +23,7 @@ func _ready():
 	sprite.flip_h = Stats.flipped
 	Stats.set_health(5)
 	Stats.set_max_health(5)
+	animationTree.active = true
 
 
 func _physics_process(delta):
@@ -48,11 +49,15 @@ func move(delta):
 			velocity.y = -JUMP_FORCE
 	else:
 		animationState.travel('Jump')
+		if Input.is_action_just_released("ui_up") and velocity.y < -JUMP_FORCE/3:
+			velocity.y = -JUMP_FORCE/2
+		if x_input == 0:
+			velocity.x = lerp(velocity.x, 0, 0.1)
 	if velocity.x > 0:
-		sprite.flip_h = false
+		sprite.flip_h = true
 		position2D.position.x = 32
 	elif velocity.x < 0:
-		sprite.flip_h = true
+		sprite.flip_h = false
 		position2D.position.x = -32
 		
 		
@@ -68,13 +73,13 @@ func shoot():
 				var main = get_tree().current_scene
 				main.add_child(projectile)
 				#Sets the origin of the projectile
-				projectile.speed = 250
+				projectile.speed = 300
 				if position2D.position.x > 0:
 					projectile.speed_x = 1
-					projectile.rotation_degrees = 270
+					projectile.rotation_degrees = 180
 				elif position2D.position.x < 0:
 					projectile.speed_x = -1
-					projectile.rotation_degrees = 90
+					projectile.rotation_degrees = 0
 				projectile.global_position = position2D.global_position 
 				restart_timer()
 func restart_timer():

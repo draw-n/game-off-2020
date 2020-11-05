@@ -1,24 +1,95 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Player/GruntPlayer.gd" type="Script" id=1]
-[ext_resource path="res://Testing/TestPlayerSpiritSprite.png" type="Texture" id=2]
+[ext_resource path="res://Testing/EnemySpriteSheetWIP1.png" type="Texture" id=2]
 [ext_resource path="res://Damage/HurtBox.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 14.4363
-height = 13.2765
+radius = 10.625
+height = 17.5
 
 [sub_resource type="Animation" id=2]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Jump"
 
 [sub_resource type="Animation" id=3]
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 0, 3, 4, 0 ]
+}
 
 [sub_resource type="Animation" id=4]
 
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "Jump"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "Run"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "Shoot"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+
 [sub_resource type="AnimationNodeStateMachine" id=5]
+states/Idle/node = SubResource( 8 )
+states/Idle/position = Vector2( 262, 62 )
+states/Jump/node = SubResource( 16 )
+states/Jump/position = Vector2( 262, -39 )
+states/Run/node = SubResource( 9 )
+states/Run/position = Vector2( 496, 62 )
+states/Shoot/node = SubResource( 10 )
+states/Shoot/position = Vector2( 262, 147 )
+transitions = [ "Idle", "Run", SubResource( 11 ), "Run", "Idle", SubResource( 12 ), "Shoot", "Idle", SubResource( 13 ), "Idle", "Shoot", SubResource( 14 ), "Jump", "Idle", SubResource( 17 ), "Idle", "Jump", SubResource( 18 ), "Jump", "Run", SubResource( 19 ), "Run", "Jump", SubResource( 20 ) ]
+start_node = "Idle"
+graph_offset = Vector2( -77.3147, -57.6754 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CapsuleShape2D" id=7]
+radius = 12.0
+height = 19.75
 
 [node name="GruntPlayer" type="KinematicBody2D"]
 collision_layer = 0
@@ -26,28 +97,31 @@ collision_mask = 11
 script = ExtResource( 1 )
 ACCELERATION = 500
 MAX_SPEED = 150
-JUMP_FORCE = 200
+FRICTION = 0.5
+JUMP_FORCE = 300
 GRAVITY = 500
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0, 0.156863, 1, 1 )
 texture = ExtResource( 2 )
+hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
+position = Vector2( 0, -3.75 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Idle = SubResource( 2 )
+anims/Jump = SubResource( 15 )
 anims/Run = SubResource( 3 )
 anims/Shoot = SubResource( 4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 5 )
+anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 6 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 21.6074, 0.140306 )
+position = Vector2( -14.767, -1.27796 )
 
 [node name="ShootTimer" type="Timer" parent="."]
 
@@ -57,6 +131,7 @@ position = Vector2( 21.6074, 0.140306 )
 collision_layer = 16
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2( 0, -3.5 )
 shape = SubResource( 7 )
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 
