@@ -49,11 +49,11 @@ func move_state(delta):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 		animationState.travel("Idle")
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("possession"):
 		state = CONTROL
 	velocity = move_and_slide(velocity)
 
-func control_state(delta):
+func control_state(_delta):
 	animationState.travel("Control")
 
 func control_finished():

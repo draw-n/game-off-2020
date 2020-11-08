@@ -5,6 +5,7 @@ var can_remove_enemy = true
 var can_change = false
 var position_global
 var flipped = false
+var tutorial_show
 
 func _change_character(new):
 	character = new

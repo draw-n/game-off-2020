@@ -62,7 +62,7 @@ func move(delta):
 		
 		
 func control():
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("possession"):
 		Stats._back_to_spirit(self.global_position, sprite.flip_h)
 
 func shoot():
@@ -73,7 +73,7 @@ func shoot():
 				var main = get_tree().current_scene
 				main.add_child(projectile)
 				#Sets the origin of the projectile
-				projectile.speed = 300
+				projectile.speed = 500
 				if position2D.position.x > 0:
 					projectile.speed_x = 1
 					projectile.rotation_degrees = 180

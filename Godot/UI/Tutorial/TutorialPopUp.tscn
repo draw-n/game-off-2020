@@ -1,0 +1,217 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Testing/TutorialButtonTest.png" type="Texture" id=1]
+[ext_resource path="res://UI/Font/EXEPixelPerfect.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Testing/TutorialBgTest.png" type="Texture" id=3]
+[ext_resource path="res://UI/Tutorial/TutorialPopUp.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "AttackEnemy"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Button:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "to Attack Enemy" ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "ChangeCharacter"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Button:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "to Possess Enemy" ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "MovementDown"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Button:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "to Float Down" ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "MovementLeft"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Button:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "to Float Left" ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "MovementRight"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Button:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "to Float Right" ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "MovementUp"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Button:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "to Float Up" ]
+}
+
+[node name="TutorialPopUp" type="NinePatchRect"]
+anchor_top = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 80.0
+margin_top = -7.92001
+margin_right = -96.0
+margin_bottom = -12.0
+texture = ExtResource( 3 )
+draw_center = false
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Sprite" parent="."]
+position = Vector2( 44, 8 )
+texture = ExtResource( 1 )
+vframes = 3
+hframes = 4
+frame = 6
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -88.0
+margin_top = -12.0
+margin_right = 5.0
+margin_bottom = 4.0
+custom_fonts/font = SubResource( 1 )
+text = "to Attack Enemy"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/AttackEnemy = SubResource( 7 )
+anims/ChangeCharacter = SubResource( 6 )
+anims/MovementDown = SubResource( 5 )
+anims/MovementLeft = SubResource( 2 )
+anims/MovementRight = SubResource( 3 )
+anims/MovementUp = SubResource( 4 )

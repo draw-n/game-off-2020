@@ -23,10 +23,23 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=15]
-resource_name = "Jump"
-
 [sub_resource type="Animation" id=3]
+resource_name = "Jump"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -42,19 +55,21 @@ tracks/0/keys = {
 "values": [ 1, 2, 0, 3, 4, 0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "Jump"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Run"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "Shoot"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=11]
 
@@ -64,35 +79,33 @@ animation = "Shoot"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=14]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+
 [sub_resource type="AnimationNodeStateMachineTransition" id=17]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
-
-[sub_resource type="AnimationNodeStateMachine" id=5]
-states/Idle/node = SubResource( 8 )
+[sub_resource type="AnimationNodeStateMachine" id=18]
+states/Idle/node = SubResource( 6 )
 states/Idle/position = Vector2( 262, 62 )
-states/Jump/node = SubResource( 16 )
+states/Jump/node = SubResource( 7 )
 states/Jump/position = Vector2( 262, -39 )
-states/Run/node = SubResource( 9 )
+states/Run/node = SubResource( 8 )
 states/Run/position = Vector2( 496, 62 )
-states/Shoot/node = SubResource( 10 )
+states/Shoot/node = SubResource( 9 )
 states/Shoot/position = Vector2( 262, 147 )
-transitions = [ "Idle", "Run", SubResource( 11 ), "Run", "Idle", SubResource( 12 ), "Shoot", "Idle", SubResource( 13 ), "Idle", "Shoot", SubResource( 14 ), "Jump", "Idle", SubResource( 17 ), "Idle", "Jump", SubResource( 18 ), "Jump", "Run", SubResource( 19 ), "Run", "Jump", SubResource( 20 ) ]
+transitions = [ "Idle", "Run", SubResource( 10 ), "Run", "Idle", SubResource( 11 ), "Shoot", "Idle", SubResource( 12 ), "Idle", "Shoot", SubResource( 13 ), "Jump", "Idle", SubResource( 14 ), "Idle", "Jump", SubResource( 15 ), "Jump", "Run", SubResource( 16 ), "Run", "Jump", SubResource( 17 ) ]
 start_node = "Idle"
 graph_offset = Vector2( -77.3147, -57.6754 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=6]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
-[sub_resource type="CapsuleShape2D" id=7]
+[sub_resource type="CapsuleShape2D" id=20]
 radius = 12.0
 height = 19.75
 
 [node name="GruntPlayer" type="KinematicBody2D"]
-collision_layer = 0
+collision_layer = 64
 collision_mask = 11
 script = ExtResource( 1 )
 ACCELERATION = 500
@@ -103,7 +116,8 @@ GRAVITY = 500
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
-hframes = 5
+hframes = 6
+frame = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -3.75 )
@@ -111,14 +125,14 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Idle = SubResource( 2 )
-anims/Jump = SubResource( 15 )
-anims/Run = SubResource( 3 )
-anims/Shoot = SubResource( 4 )
+anims/Jump = SubResource( 3 )
+anims/Run = SubResource( 4 )
+anims/Shoot = SubResource( 5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 5 )
+tree_root = SubResource( 18 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 6 )
+parameters/playback = SubResource( 19 )
 
 [node name="Position2D" type="Position2D" parent="."]
 position = Vector2( -14.767, -1.27796 )
@@ -132,7 +146,7 @@ collision_layer = 16
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2( 0, -3.5 )
-shape = SubResource( 7 )
+shape = SubResource( 20 )
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 
 [editable path="HurtBox"]
