@@ -1,13 +1,13 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Testing/PlayerSpriteSheetWIP2.png" type="Texture" id=1]
 [ext_resource path="res://Player/SpiritPlayer.gd" type="Script" id=2]
 [ext_resource path="res://Control System/ControlReceive.tscn" type="PackedScene" id=4]
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=1]
 height = 18.4895
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "Control"
 length = 0.2
 tracks/0/type = "value"
@@ -37,7 +37,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -53,7 +53,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 0, 2 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -68,7 +68,7 @@ tracks/0/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -84,20 +84,24 @@ tracks/0/keys = {
 "values": [ 4, 5, 6 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Control"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "Idle"
 
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "IdleToMove"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "IdleToMove"
+
 [sub_resource type="AnimationNodeAnimation" id=10]
-animation = "IdleToMove"
-
-[sub_resource type="AnimationNodeAnimation" id=11]
-animation = "IdleToMove"
-
-[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "Move"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=13]
 
@@ -107,52 +111,32 @@ animation = "Move"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=16]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
-
-[sub_resource type="AnimationNodeStateMachine" id=19]
-states/Control/node = SubResource( 8 )
+[sub_resource type="AnimationNodeStateMachine" id=17]
+states/Control/node = SubResource( 6 )
 states/Control/position = Vector2( -136.406, -23 )
-states/Idle/node = SubResource( 9 )
+states/Idle/node = SubResource( 7 )
 states/Idle/position = Vector2( 31, -23 )
-states/IdleToMove/node = SubResource( 11 )
+states/IdleToMove/node = SubResource( 9 )
 states/IdleToMove/position = Vector2( 31, -172.863 )
-"states/IdleToMove 2/node" = SubResource( 10 )
+"states/IdleToMove 2/node" = SubResource( 8 )
 "states/IdleToMove 2/position" = Vector2( 599, -23 )
-states/Move/node = SubResource( 12 )
+states/Move/node = SubResource( 10 )
 states/Move/position = Vector2( 599, -172.863 )
-transitions = [ "Idle", "IdleToMove", SubResource( 13 ), "IdleToMove", "Move", SubResource( 14 ), "Move", "IdleToMove 2", SubResource( 15 ), "IdleToMove 2", "Idle", SubResource( 16 ), "Control", "Idle", SubResource( 17 ), "Idle", "Control", SubResource( 18 ) ]
+transitions = [ "Idle", "IdleToMove", SubResource( 11 ), "IdleToMove", "Move", SubResource( 12 ), "Move", "IdleToMove 2", SubResource( 13 ), "IdleToMove 2", "Idle", SubResource( 14 ), "Control", "Idle", SubResource( 15 ), "Idle", "Control", SubResource( 16 ) ]
 start_node = "Idle"
 graph_offset = Vector2( -326.406, -84.8368 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=20]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
-[sub_resource type="CircleShape2D" id=21]
+[sub_resource type="CircleShape2D" id=19]
 radius = 36.5659
-
-[sub_resource type="Environment" id=2]
-background_mode = 4
-auto_exposure_enabled = true
-auto_exposure_scale = 0.5
-auto_exposure_min_luma = 5.0
-auto_exposure_max_luma = 0.5
-glow_levels/3 = false
-glow_levels/5 = false
-glow_intensity = 0.5
-glow_strength = 1.55
-glow_bloom = 0.01
-glow_blend_mode = 0
-adjustment_enabled = true
-adjustment_brightness = 1.26
-adjustment_saturation = 1.26
 
 [node name="SpiritPlayer" type="KinematicBody2D"]
 collision_layer = 64
 script = ExtResource( 2 )
-ACCELERATION = 1000
-MAX_SPEED = 150
-FRICTION = 1000.0
+ACCELERATION = 2000
+MAX_SPEED = 200
+FRICTION = 1500.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -161,18 +145,18 @@ frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Control = SubResource( 4 )
-anims/Idle = SubResource( 5 )
-anims/IdleToMove = SubResource( 6 )
-anims/Move = SubResource( 7 )
+anims/Control = SubResource( 2 )
+anims/Idle = SubResource( 3 )
+anims/IdleToMove = SubResource( 4 )
+anims/Move = SubResource( 5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 19 )
+tree_root = SubResource( 17 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 20 )
+parameters/playback = SubResource( 18 )
 
 [node name="ControlPivot" type="Position2D" parent="."]
 rotation = 3.14159
@@ -180,15 +164,12 @@ rotation = 3.14159
 [node name="ControlReceive" parent="ControlPivot" instance=ExtResource( 4 )]
 
 [node name="CollisionShape2D" parent="ControlPivot/ControlReceive" index="0"]
-shape = SubResource( 21 )
+shape = SubResource( 19 )
 disabled = true
 
 [node name="Timer" type="Timer" parent="ControlPivot"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
 [connection signal="area_entered" from="ControlPivot/ControlReceive" to="." method="_on_ControlReceive_area_entered"]
 
 [editable path="ControlPivot/ControlReceive"]

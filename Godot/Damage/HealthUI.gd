@@ -1,4 +1,4 @@
-extends Control
+extends HBoxContainer
 
 signal remove
 
@@ -24,6 +24,6 @@ func _ready():
 	if health_change != OK or max_health_change != OK:
 		print("Health change did a lil oopsie")
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if Stats.character == "Spirit":
 		emit_signal("remove")

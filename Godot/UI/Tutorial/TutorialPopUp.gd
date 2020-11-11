@@ -15,3 +15,5 @@ func _ready():
 		animationPlayer.play("ChangeCharacter")
 	elif Stats.tutorial_show == "AttackEnemy":
 		animationPlayer.play("AttackEnemy")
+	elif Stats.tutorial_show == "BackToSpirit":
+		animationPlayer.play("BackToSpirit")

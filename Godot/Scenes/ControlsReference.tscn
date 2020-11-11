@@ -1,0 +1,168 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://UI/Tutorial/ButtonLeft.png" type="Texture" id=1]
+[ext_resource path="res://UI/Tutorial/ButtonDown.png" type="Texture" id=2]
+[ext_resource path="res://UI/Tutorial/ButtonRight.png" type="Texture" id=3]
+[ext_resource path="res://UI/Tutorial/ButtonUp.png" type="Texture" id=4]
+[ext_resource path="res://UI/Tutorial/ButtonS.png" type="Texture" id=5]
+[ext_resource path="res://UI/Tutorial/ButtonA.png" type="Texture" id=6]
+[ext_resource path="res://icon.png" type="Texture" id=7]
+[ext_resource path="res://UI/Tutorial/ControlsReferenceLabels.tres" type="Theme" id=8]
+[ext_resource path="res://Scenes/ControlsReference.gd" type="Script" id=9]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.27451, 0.286275, 0.372549, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -137.5
+margin_top = -31.0
+margin_right = 137.5
+margin_bottom = 31.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Up" type="GridContainer" parent="CenterContainer"]
+margin_right = 275.0
+margin_bottom = 62.0
+custom_constants/vseparation = 10
+custom_constants/hseparation = 10
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftIcon" type="TextureRect" parent="CenterContainer/Up"]
+margin_right = 13.0
+margin_bottom = 14.0
+texture = ExtResource( 1 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftLabel" type="Label" parent="CenterContainer/Up"]
+margin_left = 23.0
+margin_right = 131.0
+margin_bottom = 14.0
+theme = ExtResource( 8 )
+text = "to move left"
+valign = 1
+
+[node name="RightIcon" type="TextureRect" parent="CenterContainer/Up"]
+margin_left = 141.0
+margin_right = 154.0
+margin_bottom = 14.0
+texture = ExtResource( 3 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightLabel" type="Label" parent="CenterContainer/Up"]
+margin_left = 164.0
+margin_right = 275.0
+margin_bottom = 14.0
+theme = ExtResource( 8 )
+text = "to move right"
+valign = 1
+
+[node name="TextureRect4" type="TextureRect" parent="CenterContainer/Up"]
+margin_top = 24.0
+margin_right = 13.0
+margin_bottom = 38.0
+texture = ExtResource( 4 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="CenterContainer/Up"]
+margin_left = 23.0
+margin_top = 24.0
+margin_right = 131.0
+margin_bottom = 38.0
+theme = ExtResource( 8 )
+text = "to move up"
+
+[node name="TextureRect5" type="TextureRect" parent="CenterContainer/Up"]
+margin_left = 141.0
+margin_top = 24.0
+margin_right = 154.0
+margin_bottom = 38.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="CenterContainer/Up"]
+margin_left = 164.0
+margin_top = 24.0
+margin_right = 275.0
+margin_bottom = 38.0
+theme = ExtResource( 8 )
+text = "to move down"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect6" type="TextureRect" parent="CenterContainer/Up"]
+margin_top = 48.0
+margin_right = 13.0
+margin_bottom = 62.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="CenterContainer/Up"]
+margin_left = 23.0
+margin_top = 48.0
+margin_right = 131.0
+margin_bottom = 62.0
+theme = ExtResource( 8 )
+text = "to toggle possession"
+
+[node name="TextureRect7" type="TextureRect" parent="CenterContainer/Up"]
+margin_left = 141.0
+margin_top = 48.0
+margin_right = 154.0
+margin_bottom = 62.0
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label6" type="Label" parent="CenterContainer/Up"]
+margin_left = 164.0
+margin_top = 48.0
+margin_right = 275.0
+margin_bottom = 62.0
+theme = ExtResource( 8 )
+text = "to attack as an enemy"
+
+[node name="Back" type="TextureButton" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

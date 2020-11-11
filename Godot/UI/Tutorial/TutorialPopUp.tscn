@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Testing/TutorialButtonTest.png" type="Texture" id=1]
 [ext_resource path="res://UI/Font/EXEPixelPerfect.ttf" type="DynamicFontData" id=2]
@@ -8,7 +8,7 @@
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=2]
 resource_name = "AttackEnemy"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Button:frame")
@@ -35,7 +35,34 @@ tracks/1/keys = {
 "values": [ "to Attack Enemy" ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
+resource_name = "BackToSpirit"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Button:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "To Revert Back" ]
+}
+
+[sub_resource type="Animation" id=4]
 resource_name = "ChangeCharacter"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Button:frame")
@@ -89,8 +116,7 @@ tracks/1/keys = {
 "values": [ "to Float Down" ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "MovementLeft"
+[sub_resource type="Animation" id=6]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Button:frame")
 tracks/0/interp = 1
@@ -116,8 +142,7 @@ tracks/1/keys = {
 "values": [ "to Float Left" ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "MovementRight"
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Button:frame")
 tracks/0/interp = 1
@@ -143,8 +168,7 @@ tracks/1/keys = {
 "values": [ "to Float Right" ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "MovementUp"
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Button:frame")
 tracks/0/interp = 1
@@ -186,7 +210,7 @@ __meta__ = {
 }
 
 [node name="Button" type="Sprite" parent="."]
-position = Vector2( 44, 8 )
+position = Vector2( 118.5, -11.96 )
 texture = ExtResource( 1 )
 vframes = 3
 hframes = 4
@@ -197,21 +221,22 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -88.0
-margin_top = -12.0
-margin_right = 5.0
-margin_bottom = 4.0
+margin_left = -169.5
+margin_top = -38.98
+margin_right = -76.5
+margin_bottom = -22.98
 custom_fonts/font = SubResource( 1 )
-text = "to Attack Enemy"
+text = "To Revert Back"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/AttackEnemy = SubResource( 7 )
-anims/ChangeCharacter = SubResource( 6 )
+anims/AttackEnemy = SubResource( 2 )
+anims/BackToSpirit = SubResource( 3 )
+anims/ChangeCharacter = SubResource( 4 )
 anims/MovementDown = SubResource( 5 )
-anims/MovementLeft = SubResource( 2 )
-anims/MovementRight = SubResource( 3 )
-anims/MovementUp = SubResource( 4 )
+anims/MovementLeft = SubResource( 6 )
+anims/MovementRight = SubResource( 7 )
+anims/MovementUp = SubResource( 8 )

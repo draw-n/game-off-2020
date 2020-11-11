@@ -108,11 +108,11 @@ height = 19.75
 collision_layer = 64
 collision_mask = 11
 script = ExtResource( 1 )
-ACCELERATION = 500
-MAX_SPEED = 150
+ACCELERATION = 750
+MAX_SPEED = 250
 FRICTION = 0.5
-JUMP_FORCE = 300
-GRAVITY = 500
+JUMP_FORCE = 350
+GRAVITY = 750
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
