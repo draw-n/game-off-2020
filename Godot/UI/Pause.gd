@@ -31,6 +31,7 @@ func _on_PauseButton_paused():
 	self.show()
 	get_tree().paused = true
 	resume.grab_focus()
+	
 
 
 func _on_PauseButton_resume():

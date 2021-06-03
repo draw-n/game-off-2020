@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Testing/LevelSelectBg.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/LevelButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/LevelSelectScene.gd" type="Script" id=3]
+
+[node name="LevelSelectScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelButton" parent="." instance=ExtResource( 2 )]
+margin_left = 156.5
+margin_top = 218.0
+margin_right = 156.5
+margin_bottom = 218.0
+focus_neighbour_left = NodePath("../LevelButton3")
+focus_neighbour_top = NodePath("../LevelButton2")
+focus_neighbour_right = NodePath("../LevelButton2")
+focus_neighbour_bottom = NodePath("../LevelButton3")
+focus_next = NodePath("../LevelButton2")
+focus_previous = NodePath("../LevelButton3")
+level = 1
+level_to_load = "res://Scenes/Mines.tscn"
+
+[node name="LevelButton2" parent="." instance=ExtResource( 2 )]
+margin_left = 349.0
+margin_top = 140.5
+margin_right = 349.0
+margin_bottom = 140.5
+focus_neighbour_left = NodePath("../LevelButton")
+focus_neighbour_top = NodePath("../LevelButton3")
+focus_neighbour_right = NodePath("../LevelButton3")
+focus_neighbour_bottom = NodePath("../LevelButton")
+focus_next = NodePath("../LevelButton3")
+focus_previous = NodePath("../LevelButton")
+level = 2
+
+[node name="LevelButton3" parent="." instance=ExtResource( 2 )]
+margin_left = 131.0
+margin_top = 88.0
+margin_right = 131.0
+margin_bottom = 88.0
+level = 3

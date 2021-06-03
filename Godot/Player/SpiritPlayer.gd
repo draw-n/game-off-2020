@@ -26,6 +26,9 @@ func _ready():
 	camera2D.current = true
 	animationTree.active = true
 
+func camera_limits():
+	pass
+
 func _physics_process(delta):
 	match state:
 		MOVE:
@@ -49,8 +52,9 @@ func move_state(delta):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 		animationState.travel("Idle")
-	if Input.is_action_just_pressed("possession"):
-		state = CONTROL
+	if Stats.ability_to_change == true:
+		if Input.is_action_just_pressed("possession"):
+			state = CONTROL
 	velocity = move_and_slide(velocity)
 
 func control_state(_delta):
@@ -60,4 +64,5 @@ func control_finished():
 	state = MOVE
 
 func _on_ControlReceive_area_entered(area):
+	Stats.speed -= 1
 	Stats._change_character(area.character)

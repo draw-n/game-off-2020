@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Damage/HealthUI.gd" type="Script" id=1]
-[ext_resource path="res://Testing/HealthBarUnder.png" type="Texture" id=2]
-[ext_resource path="res://Testing/HealthBarFill.png" type="Texture" id=3]
+[ext_resource path="res://UI/MainUI/HealthBarUnder.png" type="Texture" id=2]
+[ext_resource path="res://UI/MainUI/HealthBarFill.png" type="Texture" id=3]
 [ext_resource path="res://UI/Pause.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI/Pause/PauseButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Damage/EnemyUI.gd" type="Script" id=6]
+[ext_resource path="res://UI/MainUI.png" type="Texture" id=7]
 
 [node name="EnemyUI" type="Control"]
 pause_mode = 2
@@ -16,25 +16,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthUI" type="HBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 1 )
+[node name="HealthProgress" type="TextureProgress" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 298.0
+margin_bottom = 24.0
+size_flags_vertical = 0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthProgress" type="TextureProgress" parent="HealthUI"]
-margin_right = 86.0
-margin_bottom = 270.0
-texture_under = ExtResource( 2 )
-texture_progress = ExtResource( 3 )
-fill_mode = 4
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 480.0
+margin_bottom = 30.0
+texture = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PauseButton" parent="." instance=ExtResource( 5 )]
+margin_left = -31.0
+margin_top = 7.0
+margin_right = -11.0
+margin_bottom = 23.0
+size_flags_vertical = 1
+stretch_mode = 5
 
 [node name="Pause" parent="." instance=ExtResource( 4 )]
 margin_right = 0.0

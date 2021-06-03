@@ -19,6 +19,7 @@ func _on_PauseButton_pressed():
 	if pause_state == false:
 		emit_signal("paused")
 		pause_state = true
+		GameDataManager.save_data()
 
 
 func _on_Pause_pause_resumed():

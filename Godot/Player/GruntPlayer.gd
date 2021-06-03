@@ -2,16 +2,20 @@ extends KinematicBody2D
 
 const PROJECTILE_SCENE = preload("res://Damage/PlayerBullet.tscn")
 
-export var ACCELERATION = 100
+enum {
+	MOVE,
+	ROLL,
+	ATTACK
+}
+
+export var ACCELERATION = 500
 export var MAX_SPEED = 100
-export var FRICTION = .25
-export var JUMP_FORCE = 100
-export var GRAVITY = 100
+export var FRICTION = 500
 
 var velocity = Vector2.ZERO
+var state = MOVE
 
 onready var camera2D = $Camera2D
-onready var shootTimer = $ShootTimer
 onready var position2D = $Position2D
 onready var sprite = $Sprite
 onready var animationPlayer = $AnimationPlayer
@@ -20,70 +24,40 @@ onready var animationState = animationTree.get("parameters/playback")
 
 func _ready():
 	camera2D.current = true
-	sprite.flip_h = Stats.flipped
 	Stats.set_health(5)
 	Stats.set_max_health(5)
 	animationTree.active = true
 
 
 func _physics_process(delta):
-	move(delta)
 	control()
-	shoot()
+	if state == MOVE:
+		move_state(delta)
+#	else:
+#		attack_state(delta)
 	
-func move(delta):
-	var x_input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	velocity.x += x_input * ACCELERATION * delta
-	velocity.x = clamp(velocity.x, -MAX_SPEED, MAX_SPEED)
-	velocity.y += GRAVITY * delta
-	velocity = move_and_slide(velocity, Vector2.UP)
-
-	if is_on_floor():
-		if x_input != 0:
-			animationState.travel("Run")
-		else:
-			animationState.travel("Idle")
-		if x_input == 0:
-			velocity.x = lerp(velocity.x, 0, FRICTION)
-		if Input.is_action_pressed("ui_up"):
-			velocity.y = -JUMP_FORCE
-	else:
-		animationState.travel('Jump')
-		if Input.is_action_just_released("ui_up") and velocity.y < -JUMP_FORCE/3:
-			velocity.y = -JUMP_FORCE/2
-		if x_input == 0:
-			velocity.x = lerp(velocity.x, 0, 0.1)
-	if velocity.x > 0:
-		sprite.flip_h = true
-		position2D.position.x = 32
-	elif velocity.x < 0:
-		sprite.flip_h = false
-		position2D.position.x = -32
-		
+func move_state(delta):
+	var input_vector = Vector2.ZERO
+	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	input_vector = input_vector.normalized()
+	
+	if input_vector != Vector2.ZERO:
+#		swordHitbox.knockback_vector = input_vector
+		animationTree.set("parameters/Idle/blend_position", input_vector)
+		animationTree.set("parameters/Run/blend_position", input_vector)
+		animationTree.set("parameters/Attack/blend_position", input_vector)
+		animationTree.set("parameters/Roll/blend_position", input_vector)
+		animationState.travel("Run")
+		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+	else: 
+		animationState.travel("Idle")
+		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+	velocity = move_and_slide(velocity)
 		
 func control():
 	if Input.is_action_just_pressed("possession"):
 		Stats._back_to_spirit(self.global_position, sprite.flip_h)
-
-func shoot():
-		if Input.is_action_just_pressed("attack_as_enemy"):
-			if shootTimer.is_stopped() == true:
-		#Special feature - For every shot, minus max speed till 100
-				var projectile = PROJECTILE_SCENE.instance()
-				var main = get_tree().current_scene
-				main.add_child(projectile)
-				#Sets the origin of the projectile
-				projectile.speed = 500
-				if position2D.position.x > 0:
-					projectile.speed_x = 1
-					projectile.rotation_degrees = 180
-				elif position2D.position.x < 0:
-					projectile.speed_x = -1
-					projectile.rotation_degrees = 0
-				projectile.global_position = position2D.global_position 
-				restart_timer()
-func restart_timer():
-	shootTimer.set_wait_time(.5)
 
 
 func _on_HurtBox_area_entered(area):

@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-
-
 var health_UI_active = false
 
 const PLAYER_UI = preload("res://Player/PlayerUI.tscn")
@@ -16,7 +14,9 @@ func _process(_delta):
 		var player = PLAYER_UI.instance()
 		self.add_child(player)
 		health_UI_active = true
-	if Stats.can_change == true:
+	if Stats.ui_change == true and health_UI_active == true:
+		print("changed")
+		Stats.ui_change = false
 		health_UI_active = false
 		for i in self.get_children():
 			i.queue_free()

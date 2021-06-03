@@ -1,53 +1,59 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Enemies/Grunt/GruntEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Control System/Control.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Testing/EnemySpriteSheetWIP1.png" type="Texture" id=3]
+[ext_resource path="res://Player/GruntPlayerSpritesheet.png" type="Texture" id=3]
 [ext_resource path="res://Damage/HurtBox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Enemies/EnemyStats.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Damage/HitBox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Enemies/WanderController.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=8]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 72, 89 )
+region = Rect2( 560, 0, 56, 65 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
-region = Rect2( 72, 0, 72, 89 )
+region = Rect2( 616, 0, 56, 65 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
-region = Rect2( 144, 0, 72, 89 )
+region = Rect2( 672, 0, 56, 65 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
-region = Rect2( 216, 0, 72, 89 )
+region = Rect2( 728, 0, 56, 65 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
-region = Rect2( 288, 0, 72, 89 )
+region = Rect2( 784, 0, 56, 65 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 1 ), SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
-"name": "default",
+"name": "RunLeft",
 "speed": 7.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=7]
-radius = 8.59013
-height = 17.881
+radius = 6.86626
+height = 15.5832
 
 [sub_resource type="CapsuleShape2D" id=8]
 radius = 9.40939
-height = 22.1417
+height = 18.869
 
 [sub_resource type="CapsuleShape2D" id=9]
 radius = 12.241
+height = 14.3963
 
 [sub_resource type="CircleShape2D" id=10]
 radius = 20.5292
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 303.52
 
 [node name="GruntEnemy" type="KinematicBody2D"]
 collision_layer = 2
@@ -56,7 +62,8 @@ script = ExtResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
-frame = 4
+animation = "RunLeft"
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -78,21 +85,18 @@ shape = SubResource( 9 )
 [node name="EnemyStats" parent="." instance=ExtResource( 5 )]
 max_health = 5
 
-[node name="FloorHit" type="RayCast2D" parent="."]
-position = Vector2( -20.4062, 0 )
-enabled = true
-cast_to = Vector2( 0, 25 )
-collision_mask = 9
-
-[node name="WallHit" type="RayCast2D" parent="."]
-enabled = true
-cast_to = Vector2( -15, 0 )
-
 [node name="HitBox" parent="." instance=ExtResource( 6 )]
 collision_mask = 16
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 shape = SubResource( 10 )
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 8 )]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+shape = SubResource( 11 )
+
+[node name="WanderController" parent="." instance=ExtResource( 7 )]
 [connection signal="area_entered" from="Control" to="." method="_on_Control_area_entered"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="no_health" from="EnemyStats" to="." method="_on_EnemyStats_no_health"]
@@ -102,3 +106,5 @@ shape = SubResource( 10 )
 [editable path="HurtBox"]
 
 [editable path="HitBox"]
+
+[editable path="PlayerDetectionZone"]

@@ -132,10 +132,10 @@ graph_offset = Vector2( -326.406, -84.8368 )
 radius = 36.5659
 
 [node name="SpiritPlayer" type="KinematicBody2D"]
-collision_layer = 64
+collision_layer = 0
+collision_mask = 129
 script = ExtResource( 2 )
 ACCELERATION = 2000
-MAX_SPEED = 200
 FRICTION = 1500.0
 
 [node name="Sprite" type="Sprite" parent="."]

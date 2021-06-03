@@ -12,7 +12,7 @@ func _physics_process(_delta):
 			i.grab_focus()
 
 func _on_Play_pressed():
-	FadeOut.fade_in("res://Scenes/Tutorial.tscn")
+	FadeOut.fade_in("res://Scenes/LevelSelectScene.tscn")
 
 func _on_Controls_pressed():
 	FadeOut.fade_in("res://Scenes/ControlsReference.tscn")

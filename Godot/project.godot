@@ -23,6 +23,8 @@ config/icon="res://icon.png"
 
 Stats="*res://Stats.tscn"
 FadeOut="*res://UI/FadeOut.tscn"
+ConfigManager="*res://ConfigManager.gd"
+GameDataManager="*res://GameDataManager.tscn"
 
 [display]
 
